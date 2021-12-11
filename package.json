@@ -1,0 +1,5 @@
+{
+  "dependencies": {
+    "ngx-select-dropdown": "^2.1.0"
+  }
+}

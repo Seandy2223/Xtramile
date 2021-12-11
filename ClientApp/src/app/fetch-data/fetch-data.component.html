@@ -1,0 +1,75 @@
+<h1 id="tableLabel">Weather forecast</h1>
+
+<form [formGroup]="form">
+  <label for="country">Please choose country first:</label>
+  <select formControlName="country" class="form-control" (change)="changeCountry($event)">
+    <option>Choose Country</option>
+    <option *ngFor="let country of countryList">{{country}}</option>
+  </select>
+  <div *ngIf="f.country.touched && f.country.invalid" class="alert alert-danger">
+    <div *ngIf="f.country.errors.required">Country is required.</div>
+  </div>
+
+  <div *ngIf="cityList">
+    <label for="city">Please choose city first:</label>
+    <select formControlName="country" class="form-control" (change)="changeCity($event)">
+      <option>Choose city</option>
+      <option *ngFor="let city of cityList">{{city}}</option>
+    </select>
+  </div>
+</form>
+
+<p *ngIf="!forecasts && errorMsg" style="color:red; font-weight:bold">{{errorMsg}}</p>
+
+<p *ngIf="forecasts && !errorMsg">Your weather information for selected city.</p>
+
+<table class='table table-striped' aria-labelledby="tableLabel" *ngIf="forecasts">
+  <thead>
+    <tr>
+      <th width="50%"></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Location</td>
+      <td>{{forecasts.location}}</td>
+    </tr>
+    <tr>
+      <td>Time</td>
+      <td>{{forecasts.time| date:'h:mm a'}}</td>
+    </tr>
+    <tr>
+      <td>Wind</td>
+      <td>{{forecasts.wind}} m/s</td>
+    </tr>
+    <tr>
+      <td>Visibility</td>
+      <td>{{forecasts.visibility}}</td>
+    </tr>
+    <tr>
+      <td>Sky Conditions</td>
+      <td>{{forecasts.skyConditions}}</td>
+    </tr>
+    <tr>
+      <td>Temperature (in Celcius)</td>
+      <td>{{forecasts.temperatureC | number : '1.0-2'}}</td>
+    </tr>
+    <tr>
+      <td>Temperature (in Fahrenheit)</td>
+      <td>{{forecasts.temperatureF | number : '1.0-2'}}</td>
+    </tr>
+    <tr>
+      <td>Dew Point</td>
+      <td>{{forecasts.dewPoint | number : '1.0-1'}}</td>
+    </tr>
+    <tr>
+      <td>Relative Humidity</td>
+      <td>{{forecasts.relativeHumidity}} %</td>
+    </tr>
+    <tr>
+      <td>Pressure</td>
+      <td>{{forecasts.pressure}} hPa</td>
+    </tr>
+  </tbody>
+</table>
