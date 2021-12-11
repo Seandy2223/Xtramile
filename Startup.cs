@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.SpaServices.AngularCli;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Xtramile.Base;
 
 namespace Xtramile
 {
@@ -21,20 +22,12 @@ namespace Xtramile
         {
             services.AddControllersWithViews();
 
+            RegisterFramework.RegisterDI(services);
+
             // In production, the Angular files will be served from this directory
             services.AddSpaStaticFiles(configuration =>
             {
                 configuration.RootPath = "ClientApp/dist";
-            });
-
-            services.AddCors(options =>
-            {
-                options.AddPolicy(name: "mywhitelistdomain",
-                                  builder =>
-                                  {
-                                      builder.WithOrigins("http://localhost:53389",
-                                                          "http://localhost:3447").AllowAnyMethod().AllowAnyHeader();;
-                                  });
             });
         }
 
@@ -58,7 +51,6 @@ namespace Xtramile
 
             app.UseRouting();
 
-            app.UseCors("mywhitelistdomain");
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
